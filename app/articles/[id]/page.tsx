@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PublicHeader } from '../../components/public-header';
+import { SectionContents } from '../../components/section-contents';
 import { articleById, type Article } from '../../data/articles';
 import { benefitArticleBodies } from '../../data/benefit-articles';
 import { siteSlugs, type SiteSlug } from '../../data/site-content';
@@ -69,18 +70,21 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
         <img className="direction-theme-image direction-theme-image-night" src={nightImage} alt="" />
       </div>
       <div className="article-page-shade" aria-hidden="true" />
-      <article className="article-page-content">
-        <Link className="article-back" href={backHref}>← Назад к разделу</Link>
-        <header>
-          <span>{article.date} / материал</span>
-          <h1>{article.title}</h1>
-          <p>{article.excerpt}</p>
-        </header>
-        <div className="article-page-body">
-          {article.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-        </div>
-        <a className="article-source" href={article.sourceUrl} target="_blank" rel="noopener noreferrer">Официальный источник ↗</a>
-      </article>
+      <div className="page-body article-layout">
+        <SectionContents page={sourcePage} activeId={article.id} />
+        <article className="article-page-content" id="article-content">
+          <Link className="article-back" href={backHref}>← Назад к разделу</Link>
+          <header>
+            <span>{article.date} / материал</span>
+            <h1>{article.title}</h1>
+            <p>{article.excerpt}</p>
+          </header>
+          <div className="article-page-body">
+            {article.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </div>
+          <a className="article-source" href={article.sourceUrl} target="_blank" rel="noopener noreferrer">Официальный источник ↗</a>
+        </article>
+      </div>
     </main>
   );
 }

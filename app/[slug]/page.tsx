@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DirectionActions } from '../components/direction-actions';
 import { PublicHeader } from '../components/public-header';
+import { SectionContents } from '../components/section-contents';
 import { isSiteSlug } from '../data/site-content';
 import { priorityVacancies, vacancies, type VacancySectionId } from '../data/vacancies';
 import { getAllPageContent, getPageContent } from '../lib/store';
@@ -34,7 +35,7 @@ export default async function DirectionPage({ params }: { params: Promise<{ slug
         <img className="direction-theme-image direction-theme-image-night" src={page.image.night} alt="" style={{ objectPosition: page.image.position }} />
       </div>
       <div className="direction-page-overlay" aria-hidden="true" />
-      <section className="direction-hero direction-hero-extended">
+      <section className="direction-hero">
         <div className="direction-hero-copy">
           <p>{page.kicker}</p>
           <h1>{page.title}</h1>
@@ -43,16 +44,7 @@ export default async function DirectionPage({ params }: { params: Promise<{ slug
       </section>
 
       <div className="page-body">
-        <aside className="page-toc">
-          <strong>Материалы раздела</strong>
-          <nav aria-label="Статьи раздела">
-            {page.sections.map((section) => (
-              <Link href={`/articles/${page.slug}-${section.id}`} key={section.id}>
-                {section.title}<span aria-hidden="true">↗</span>
-              </Link>
-            ))}
-          </nav>
-        </aside>
+        <SectionContents page={page} />
         <article className="page-copy page-overview">
           <section>
             <span className="page-overview-label">Кратко о разделе</span>
